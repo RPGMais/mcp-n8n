@@ -1,17 +1,32 @@
+<div align="center">
+
 # mcp-n8n
 
-The most complete MCP server for [n8n](https://n8n.io) — **43 tools** covering the entire n8n API.
+**The most complete MCP server for [n8n](https://n8n.io)**
 
-Built with the [Model Context Protocol](https://modelcontextprotocol.io/) SDK for use with Claude, Cursor, Windsurf and any MCP-compatible AI assistant.
+43 tools · Workflows · Data Tables · Tags · Credentials · Users · Webhooks · Audit
 
-## Why this one?
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/Node.js-≥18-green.svg)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue.svg)](https://www.typescriptlang.org/)
+[![MCP SDK](https://img.shields.io/badge/MCP_SDK-1.25-purple.svg)](https://modelcontextprotocol.io/)
+
+[Quick Start](#-quick-start) · [All 43 Tools](#-tools) · [Configuration](#%EF%B8%8F-configuration) · [Contributing](#-contributing)
+
+</div>
+
+---
+
+## Why mcp-n8n?
+
+Other n8n MCPs cover workflows and executions. **mcp-n8n covers everything** — including Data Tables, the only MCP to do so.
 
 | Feature | mcp-n8n | leonardsellem | illuminare | czlonkowski |
 |---|:---:|:---:|:---:|:---:|
 | Workflows (CRUD + execute) | **10** | 7 | 8 | 4 |
-| Executions (list/get/delete) | **3** | 5 | 3 | 2 |
-| **Data Tables (full CRUD)** | **8** | — | — | — |
-| Tags (CRUD + workflow tags) | **7** | — | 5 | — |
+| Executions | **3** | 5 | 3 | 2 |
+| **Data Tables** | **8** | — | — | — |
+| Tags + Workflow Tags | **7** | — | 5 | — |
 | Credentials | **4** | — | 3 | — |
 | Users | **3** | — | 4 | — |
 | Variables | **3** | — | 3 | — |
@@ -21,19 +36,28 @@ Built with the [Model Context Protocol](https://modelcontextprotocol.io/) SDK fo
 | Health Check | **1** | — | — | 1 |
 | **Total** | **43** | **12** | **33** | **20** |
 
-**Only MCP with Data Tables support** — full CRUD with filters, search, upsert and dry-run.
+> **Data Tables** — full CRUD with filters, search, upsert and dry-run. No other MCP has this.
 
-## Quick Start
+---
 
-### Claude Code
+## 🚀 Quick Start
+
+<details open>
+<summary><strong>Claude Code</strong></summary>
 
 ```bash
-claude mcp add --scope user -e N8N_BASE_URL=http://localhost:5678 -e N8N_API_KEY=your-api-key -- mcp-n8n npx -y mcp-n8n
+claude mcp add --scope user \
+  -e N8N_BASE_URL=http://localhost:5678 \
+  -e N8N_API_KEY=your-api-key \
+  -- mcp-n8n npx -y mcp-n8n
 ```
 
-### Claude Desktop / Cursor / Windsurf
+</details>
 
-Add to your MCP config (e.g. `~/.cursor/mcp.json`):
+<details>
+<summary><strong>Cursor</strong></summary>
+
+Add to `~/.cursor/mcp.json`:
 
 ```json
 {
@@ -50,6 +74,80 @@ Add to your MCP config (e.g. `~/.cursor/mcp.json`):
 }
 ```
 
+</details>
+
+<details>
+<summary><strong>Claude Desktop</strong></summary>
+
+Add to `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "n8n": {
+      "command": "npx",
+      "args": ["-y", "mcp-n8n"],
+      "env": {
+        "N8N_BASE_URL": "http://localhost:5678",
+        "N8N_API_KEY": "your-api-key"
+      }
+    }
+  }
+}
+```
+
+Config file location:
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+</details>
+
+<details>
+<summary><strong>Windsurf</strong></summary>
+
+Add to your Windsurf MCP config:
+
+```json
+{
+  "mcpServers": {
+    "n8n": {
+      "command": "npx",
+      "args": ["-y", "mcp-n8n"],
+      "env": {
+        "N8N_BASE_URL": "http://localhost:5678",
+        "N8N_API_KEY": "your-api-key"
+      }
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>VS Code (Copilot)</strong></summary>
+
+Add to your VS Code `settings.json`:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "n8n": {
+        "command": "npx",
+        "args": ["-y", "mcp-n8n"],
+        "env": {
+          "N8N_BASE_URL": "http://localhost:5678",
+          "N8N_API_KEY": "your-api-key"
+        }
+      }
+    }
+  }
+}
+```
+
+</details>
+
 ### Getting your API key
 
 1. Open your n8n instance
@@ -57,43 +155,47 @@ Add to your MCP config (e.g. `~/.cursor/mcp.json`):
 3. Create a new API key
 4. Copy it into the `N8N_API_KEY` environment variable
 
-## Tools
+---
+
+## 🛠 Tools
 
 ### Workflows (10)
 
 | Tool | Description |
 |---|---|
 | `n8n_list_workflows` | List all workflows with optional filters |
-| `n8n_get_workflow` | Get a workflow by ID |
-| `n8n_create_workflow` | Create a new workflow |
-| `n8n_update_workflow` | Update an existing workflow |
-| `n8n_delete_workflow` | Delete a workflow |
+| `n8n_get_workflow` | Get a workflow by ID (includes nodes, connections, settings) |
+| `n8n_create_workflow` | Create a new workflow from JSON |
+| `n8n_update_workflow` | Update an existing workflow (full replacement) |
+| `n8n_delete_workflow` | Permanently delete a workflow |
 | `n8n_activate_workflow` | Activate a workflow for production |
 | `n8n_deactivate_workflow` | Deactivate a workflow |
-| `n8n_execute_workflow` | Execute a workflow with optional input data |
-| `n8n_get_workflow_tags` | List tags on a workflow |
-| `n8n_update_workflow_tags` | Replace tags on a workflow |
+| `n8n_execute_workflow` | Trigger execution with optional input data |
+| `n8n_get_workflow_tags` | List tags associated with a workflow |
+| `n8n_update_workflow_tags` | Replace all tags on a workflow |
 
 ### Executions (3)
 
 | Tool | Description |
 |---|---|
-| `n8n_list_executions` | List executions with filters (workflow, status) |
-| `n8n_get_execution` | Get execution details and results |
+| `n8n_list_executions` | List executions with filters (workflow, status, cursor) |
+| `n8n_get_execution` | Get execution status, result data and timing |
 | `n8n_delete_execution` | Delete an execution record |
 
 ### Data Tables (8)
 
+> Only available in n8n v1.64+. This is the **only MCP server with Data Tables support**.
+
 | Tool | Description |
 |---|---|
-| `n8n_list_datatables` | List data tables |
-| `n8n_create_datatable` | Create a data table with typed columns |
-| `n8n_get_datatable` | Get data table metadata |
-| `n8n_get_datatable_rows` | Query rows with filter, search and pagination |
-| `n8n_insert_datatable_rows` | Insert rows |
-| `n8n_update_datatable_rows` | Update rows matching a filter |
-| `n8n_upsert_datatable_row` | Update or insert a row |
-| `n8n_delete_datatable_rows` | Delete rows matching a filter |
+| `n8n_list_datatables` | List all data tables with filtering and sorting |
+| `n8n_create_datatable` | Create a table with typed columns (string, number, boolean, date, json) |
+| `n8n_get_datatable` | Get table metadata (columns, name, ID) |
+| `n8n_get_datatable_rows` | Query rows with filter, full-text search, sorting and pagination |
+| `n8n_insert_datatable_rows` | Insert one or more rows |
+| `n8n_update_datatable_rows` | Update rows matching a filter (supports dry-run) |
+| `n8n_upsert_datatable_row` | Update if exists, insert if not |
+| `n8n_delete_datatable_rows` | Delete rows matching a filter (supports dry-run) |
 
 ### Tags (5)
 
@@ -101,7 +203,7 @@ Add to your MCP config (e.g. `~/.cursor/mcp.json`):
 |---|---|
 | `n8n_list_tags` | List all tags |
 | `n8n_get_tag` | Get a tag by ID |
-| `n8n_create_tag` | Create a tag |
+| `n8n_create_tag` | Create a new tag |
 | `n8n_update_tag` | Rename a tag |
 | `n8n_delete_tag` | Delete a tag |
 
@@ -109,8 +211,8 @@ Add to your MCP config (e.g. `~/.cursor/mcp.json`):
 
 | Tool | Description |
 |---|---|
-| `n8n_list_credentials` | List credentials (names only, data redacted) |
-| `n8n_create_credential` | Create a credential |
+| `n8n_list_credentials` | List credentials (names and types only — data is redacted) |
+| `n8n_create_credential` | Create a credential (use `get_credential_schema` first) |
 | `n8n_delete_credential` | Delete a credential |
 | `n8n_get_credential_schema` | Get the JSON schema for a credential type |
 
@@ -118,7 +220,7 @@ Add to your MCP config (e.g. `~/.cursor/mcp.json`):
 
 | Tool | Description |
 |---|---|
-| `n8n_list_users` | List all users (owner only) |
+| `n8n_list_users` | List all users (requires instance owner role) |
 | `n8n_get_user` | Get a user by ID or email |
 | `n8n_delete_user` | Delete a user |
 
@@ -126,15 +228,15 @@ Add to your MCP config (e.g. `~/.cursor/mcp.json`):
 
 | Tool | Description |
 |---|---|
-| `n8n_list_variables` | List environment variables |
-| `n8n_create_variable` | Create a variable |
+| `n8n_list_variables` | List all environment variables |
+| `n8n_create_variable` | Create a key-value variable |
 | `n8n_delete_variable` | Delete a variable |
 
-### Projects — Enterprise (4)
+### Projects (4) — Enterprise
 
 | Tool | Description |
 |---|---|
-| `n8n_list_projects` | List projects |
+| `n8n_list_projects` | List all projects |
 | `n8n_create_project` | Create a project |
 | `n8n_update_project` | Rename a project |
 | `n8n_delete_project` | Delete a project |
@@ -143,48 +245,104 @@ Add to your MCP config (e.g. `~/.cursor/mcp.json`):
 
 | Tool | Description |
 |---|---|
-| `n8n_generate_audit` | Generate a security audit report |
+| `n8n_generate_audit` | Generate a security audit (credentials, database, filesystem, nodes) |
 
 ### System (1)
 
 | Tool | Description |
 |---|---|
-| `n8n_health_check` | Check n8n API connectivity |
+| `n8n_health_check` | Verify n8n API connectivity |
 
 ### Webhooks (1)
 
 | Tool | Description |
 |---|---|
-| `n8n_trigger_webhook` | Trigger a workflow via webhook URL |
+| `n8n_trigger_webhook` | Trigger a workflow via its webhook URL (production or test) |
 
-## Configuration
+---
+
+## ⚙️ Configuration
 
 | Variable | Default | Description |
 |---|---|---|
-| `N8N_BASE_URL` | `http://localhost:5678` | n8n instance URL |
-| `N8N_API_KEY` | — | API key (required) |
-| `N8N_MAX_RETRIES` | `3` | Max retry attempts on 429/5xx |
-| `N8N_TIMEOUT` | `30000` | Request timeout in ms |
+| `N8N_BASE_URL` | `http://localhost:5678` | Your n8n instance URL |
+| `N8N_API_KEY` | — | API key (**required**) |
+| `N8N_MAX_RETRIES` | `3` | Retry attempts on 429 / 5xx errors |
+| `N8N_TIMEOUT` | `30000` | Request timeout in milliseconds |
 
-## Features
+---
 
-- **Automatic retry** with exponential backoff on 429 (rate limit) and 5xx errors
-- **Configurable timeout** to prevent hung requests
-- **Zero external dependencies** beyond MCP SDK and Zod
-- **TypeScript strict mode** with full type safety
-- **Node 16+ compatible** with native fetch fallback
+## ✨ Features
 
-## Development
+- **43 tools** — the most comprehensive n8n MCP available
+- **Data Tables** — full CRUD, the only MCP with this support
+- **Automatic retry** — exponential backoff on rate limits (429) and server errors (5xx)
+- **Configurable timeout** — prevent hung requests (default 30s)
+- **Zero external dependencies** — only MCP SDK + Zod
+- **TypeScript strict mode** — fully typed, safe, and maintainable
+- **Node 16+ compatible** — native fetch with http/https fallback
+
+---
+
+## 🔒 Security
+
+- API keys are **never hardcoded** — loaded exclusively from environment variables
+- Credential data is **redacted** in list responses (n8n API behavior)
+- All IDs are sanitized with `encodeURIComponent` to prevent path traversal
+- No sensitive data is logged or exposed in error messages
+
+---
+
+## 🏗 Development
 
 ```bash
 git clone https://github.com/RPGMais/mcp-n8n.git
 cd mcp-n8n
 npm install
-npm run dev    # Run with tsx (no build needed)
-npm run build  # Compile TypeScript
-npm start      # Run compiled version
 ```
 
-## License
+| Command | Description |
+|---|---|
+| `npm run dev` | Run with tsx (no build step) |
+| `npm run build` | Compile TypeScript to `dist/` |
+| `npm start` | Run compiled version |
 
-MIT
+### Project structure
+
+```
+mcp-n8n/
+├── src/
+│   ├── index.ts          # MCP server — tool registration and handlers
+│   └── n8n-client.ts     # HTTP client — API calls, retry, timeout
+├── dist/                  # Compiled output
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feat/my-feature`)
+3. Commit your changes
+4. Push and open a Pull Request
+
+---
+
+## 📄 License
+
+[MIT](LICENSE) — free for personal and commercial use.
+
+---
+
+<div align="center">
+
+Built by [NexTool Solutions](https://github.com/RPGMais)
+
+If this project helps you, consider giving it a ⭐
+
+</div>
