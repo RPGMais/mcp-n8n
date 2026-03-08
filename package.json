@@ -1,5 +1,5 @@
 {
-  "name": "mcp-n8n",
+  "name": "@nextoolsolutions/mcp-n8n",
   "version": "2.0.0",
   "description": "The most complete MCP server for n8n — 43 tools covering workflows, executions, data tables, tags, credentials, users, variables, projects, audit and webhooks.",
   "type": "module",

@@ -6,6 +6,7 @@
 
 43 tools · Workflows · Data Tables · Tags · Credentials · Users · Webhooks · Audit
 
+[![npm](https://img.shields.io/npm/v/@nextoolsolutions/mcp-n8n.svg)](https://www.npmjs.com/package/@nextoolsolutions/mcp-n8n)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-≥18-green.svg)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue.svg)](https://www.typescriptlang.org/)
@@ -49,7 +50,7 @@ Other n8n MCPs cover workflows and executions. **mcp-n8n covers everything** —
 claude mcp add --scope user \
   -e N8N_BASE_URL=http://localhost:5678 \
   -e N8N_API_KEY=your-api-key \
-  -- mcp-n8n npx -y mcp-n8n
+  -- n8n npx -y @nextoolsolutions/mcp-n8n
 ```
 
 </details>
