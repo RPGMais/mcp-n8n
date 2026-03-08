@@ -1,0 +1,38 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.RPGMais/mcp-n8n",
+  "title": "n8n MCP Server",
+  "description": "The most complete MCP server for n8n — 43 tools for workflows, data tables, and more.",
+  "version": "2.0.2",
+  "repository": {
+    "url": "https://github.com/RPGMais/mcp-n8n",
+    "source": "github",
+    "id": "RPGMais/mcp-n8n"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@nextoolsolutions/mcp-n8n",
+      "version": "2.0.2",
+      "transport": {
+        "type": "stdio"
+      },
+      "runtimeHint": "npx",
+      "environmentVariables": [
+        {
+          "name": "N8N_BASE_URL",
+          "description": "n8n instance URL (e.g. http://localhost:5678)",
+          "isRequired": false,
+          "isSecret": false
+        },
+        {
+          "name": "N8N_API_KEY",
+          "description": "n8n API key",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
