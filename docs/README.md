@@ -33,7 +33,7 @@ Documentação do que foi feito para conectar o **Cursor** ao **n8n** via um ser
   - `src/index.ts` – servidor MCP e registro das tools  
   - `src/n8n-client.ts` – cliente HTTP da API n8n  
 - **Configuração Cursor:** `/data/.cursor/mcp.json`  
-- **Documentação:** `/data/docs/mcp/n8n-mcp/` (esta pasta)
+- **Documentação:** `(path deprecado, ver skills) mcp/n8n-mcp/` (esta pasta)
 
 ---
 
